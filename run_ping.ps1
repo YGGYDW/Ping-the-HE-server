@@ -188,8 +188,18 @@ $outCsv = Join-Path (Get-Location) 'results.csv'
 $outXlsx = Join-Path (Get-Location) 'results.xlsx'
 
 if ($fmt -eq 'CSV') {
-    $final | Select-Object Rank, Region, Country, IP, AverageMs, MinMs, MaxMs, LossPct, TTL |
-        Export-Csv -Path $outCsv -NoTypeInformation -Encoding UTF8
+$final | Select-Object `
+    @{Name='排名'; Expression={$_.Rank}},`
+    @{Name='区域'; Expression={$_.Region}},`
+    @{Name='地点'; Expression={$_.Country}},`
+    @{Name='IP'; Expression={$_.IP}},`
+    @{Name='平均延迟'; Expression={$_.AverageMs}},`
+    @{Name='最小延迟'; Expression={$_.MinMs}},`
+    @{Name='最大延迟'; Expression={$_.MaxMs}},`
+    @{Name='丢包率'; Expression={$_.LossPct}},`
+    @{Name='TTL'; Expression={$_.TTL}} |
+    Export-Csv -Path $outCsv -NoTypeInformation -Encoding UTF8 -Force
+
     Write-Output "CSV 已生成： $outCsv"
     exit 0
 }
@@ -201,7 +211,7 @@ if ($fmt -eq 'XLSX') {
         $excel.Visible = $false
         $wb = $excel.Workbooks.Add()
         $ws = $wb.Worksheets.Item(1)
-        $headers = 'Rank','Region','Country','IP','AverageMs','MinMs','MaxMs','LossPct','TTL'
+        $headers = '排名','区域','地点','IP','平均延迟','最小延迟','最大延迟','丢包率','TTL'
         for ($i=0; $i -lt $headers.Count; $i++) {
             $ws.Cells.Item(1, $i+1) = $headers[$i]
         }
@@ -227,8 +237,17 @@ if ($fmt -eq 'XLSX') {
         Write-Output "生成 XLSX 失败：未检测到可用 Excel COM 或发生错误。"
         $fallback = Read-Host "是否回退保存为 CSV？(Y/N)"
         if ($fallback.ToUpper() -eq 'Y') {
-            $final | Select-Object Rank, Region, Country, IP, AverageMs, MinMs, MaxMs, LossPct, TTL |
-                Export-Csv -Path $outCsv -NoTypeInformation -Encoding UTF8
+            $final | Select-Object `
+                @{Name='排名'; Expression={$_.Rank}},`
+                @{Name='区域'; Expression={$_.Region}},`
+                @{Name='地点'; Expression={$_.Country}},`
+                @{Name='IP'; Expression={$_.IP}},`
+                @{Name='平均延迟'; Expression={$_.AverageMs}},`
+                @{Name='最小延迟'; Expression={$_.MinMs}},`
+                @{Name='最大延迟'; Expression={$_.MaxMs}},`
+                @{Name='丢包率'; Expression={$_.LossPct}},`
+                @{Name='TTL'; Expression={$_.TTL}} |
+                Export-Csv -Path $outCsv -NoTypeInformation -Encoding UTF8 -Force
             Write-Output "CSV 已生成： $outCsv"
             exit 0
         } else {
