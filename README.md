@@ -15,10 +15,9 @@
 
 ## 脚本下载
    - 避免运行bat出错，请在releases中下载：
-   - https://github.com/YGGYDW/IPV6-IP6.Arpa/releases/tag/IPV6-IP6.ARPA
+   - https://github.com/YGGYDW/Ping-the-HE-server/releases/tag/Ping-HE-Tunnel
 
 ## 隧道服务器IP
-   - 避免运行bat出错，请在releases中下载：
-   - https://github.com/YGGYDW/IPV6-IP6.Arpa/releases/tag/IPV6-IP6.ARPA
+   - https://github.com/YGGYDW/Ping-the-HE-server/blob/main/%E9%9A%A7%E9%81%93%E6%9C%8D%E5%8A%A1%E5%99%A8IP.txt
 
 
